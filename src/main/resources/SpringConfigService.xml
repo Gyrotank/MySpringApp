@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:context="http://www.springframework.org/schema/context"
+  xmlns:tx="http://www.springframework.org/schema/tx"
+  xmlns:util="http://www.springframework.org/schema/util"
+  xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.2.xsd
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.2.xsd
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.2.xsd">
+        
+	<context:component-scan base-package="ua.epam.rd.service" />
+	
+	<bean name="orderBasic" class="ua.epam.rd.repository.Order" scope="prototype"/>
+	
+	<!-- <bean name="pizzaRepository" class="ua.epam.rd.service.PizzaRepositoryImpl"/> -->
+	
+	<bean name="pizzaRepository" class="ua.epam.rd.service.PizzaRepositoryImpl">
+		<property name="pizzas"> <list>
+			<bean class="ua.epam.rd.repository.Pizza">
+				<property name="name" value="Big Sea"/>
+  				<property name="price" value="100.0"/>
+  				<property name="type" value="SEA"/>
+			</bean>
+			<bean class="ua.epam.rd.repository.Pizza">
+				<property name="name" value="Big Meat"/>
+  				<property name="price" value="150.0"/>
+  				<property name="type" value="MEAT"/>
+			</bean>
+			<bean class="ua.epam.rd.repository.Pizza">
+				<property name="name" value="Small Vegetable"/>
+  				<property name="price" value="75.0"/>
+  				<property name="type" value="VEGETARIAN"/>
+			</bean>
+		</list> </property>
+	</bean>	 
+
+	<bean name="pizzaService" class="ua.epam.rd.service.PizzaServiceImpl"/>
+	
+	<bean name="orderRepository" class="ua.epam.rd.service.OrderRepositoryImpl"/>
+	
+	<bean id="orderService" class="ua.epam.rd.service.OrderServiceImpl">
+    	<lookup-method name="createNewOrder" bean="orderBasic"/>
+	</bean>
+        
+</beans>
