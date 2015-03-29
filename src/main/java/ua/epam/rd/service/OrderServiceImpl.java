@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 import ua.epam.rd.repository.Order;
 import ua.epam.rd.repository.Pizza;
 
-@Service
+@Service("orderService")
 public abstract class OrderServiceImpl implements OrderService {
 	
 	@Autowired
@@ -24,11 +24,6 @@ public abstract class OrderServiceImpl implements OrderService {
 		return orderRepository.getById(id);
 	}
 
-	/*@Override
-	public Order createNewOrder() {
-		return new Order();
-	}*/
-	
 	@Override
 	public abstract Order createNewOrder();
 

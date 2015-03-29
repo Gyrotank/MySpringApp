@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 
 import ua.epam.rd.repository.Order;
 
-@Repository
+@Repository("orderRepository")
 public class OrderRepositoryImpl implements OrderRepository {
 	
 	private List<Order> orders = new ArrayList<Order>();

@@ -7,20 +7,6 @@
         http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.2.xsd
         http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.2.xsd">
 
-  <bean name="webView" class="ua.epam.rd.WebView"/>
-  
-  <bean name="desktopView" class="ua.epam.rd.DesktopView">
-  	<constructor-arg index="0" type="int" value="1"/>
-  </bean>
-  
-  <bean name="applicationWeb" class="ua.epam.rd.Application">
-  	<constructor-arg ref="webView"/>
-  </bean>
-  
-  <bean name="applicationDesktop" class="ua.epam.rd.Application">
-  	<constructor-arg ref="desktopView"/>
-  </bean>
-  
   <bean name="pizzaDefaultMeat" class="ua.epam.rd.repository.Pizza"/>
   
   <bean name="pizzaSea" class="ua.epam.rd.repository.Pizza">

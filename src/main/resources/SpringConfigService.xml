@@ -7,12 +7,10 @@
         http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
         http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.2.xsd
         http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.2.xsd">
-        
-	<context:component-scan base-package="ua.epam.rd.service" />
-	
+    
+    <context:component-scan base-package="ua.epam.rd" />
+        	
 	<bean name="orderBasic" class="ua.epam.rd.repository.Order" scope="prototype"/>
-	
-	<!-- <bean name="pizzaRepository" class="ua.epam.rd.service.PizzaRepositoryImpl"/> -->
 	
 	<bean name="pizzaRepository" class="ua.epam.rd.service.PizzaRepositoryImpl">
 		<property name="pizzas"> <list>
