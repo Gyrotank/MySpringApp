@@ -9,9 +9,7 @@
         http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.2.xsd">
     
     <context:component-scan base-package="ua.epam.rd">
-    <!-- 
-    	<context:include-filter type="annotation" expression="ua.epam.rd.repository.OrderAnnotation"/>
-     -->
+    	<context:include-filter type="annotation" expression="ua.epam.rd.repository.OrderAnnotation"/>  
     </context:component-scan>
         	
 	<bean name="orderBasic" class="ua.epam.rd.repository.Order" scope="prototype"/>
@@ -43,5 +41,7 @@
 	<bean id="orderService" class="ua.epam.rd.service.OrderServiceImpl">
     	<lookup-method name="createNewOrder" bean="orderBasic"/>
 	</bean>
+	
+	<bean id="orderAnnotationHandler" class="ua.epam.rd.repository.OrderAnnotationHandler"/>
         
 </beans>

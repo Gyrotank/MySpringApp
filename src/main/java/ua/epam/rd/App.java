@@ -12,6 +12,7 @@ import org.springframework.stereotype.Component;
 
 import ua.epam.rd.repository.Order;
 import ua.epam.rd.repository.OrderAnnotated;
+import ua.epam.rd.repository.OrderAnnotationHandler;
 import ua.epam.rd.repository.OrderInterface;
 import ua.epam.rd.repository.Pizza;
 import ua.epam.rd.repository.PizzaType;
@@ -42,7 +43,11 @@ public class App
         ConfigurableApplicationContext appContextService 
         	= new ClassPathXmlApplicationContext(new String[]{"SpringConfigService.xml"}, appContext);
         
+        OrderAnnotationHandler orderAnnotationHandler
+        	= (OrderAnnotationHandler) appContextService.getBean("orderAnnotationHandler");
+        orderAnnotationHandler.setApplicationContext(appContextService);
         
+        System.out.println();
         System.out.println("====");
         System.out.println("SIMPLE BEAN INSTANTIATION");
         System.out.println("====");
