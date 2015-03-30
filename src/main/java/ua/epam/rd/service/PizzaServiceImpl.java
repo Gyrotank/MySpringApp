@@ -3,10 +3,12 @@ package ua.epam.rd.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import ua.epam.rd.repository.Pizza;
 import ua.epam.rd.repository.PizzaType;
 
+@Service("pizzaService")
 public class PizzaServiceImpl implements PizzaService {
 	
 	@Autowired

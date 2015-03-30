@@ -3,9 +3,12 @@ package ua.epam.rd.service;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.stereotype.Repository;
+
 import ua.epam.rd.repository.Pizza;
 import ua.epam.rd.repository.PizzaType;
 
+@Repository("pizzaRepository")
 public class PizzaRepositoryImpl implements PizzaRepository {
 	
 	private List<Pizza> pizzas = new ArrayList<Pizza>();

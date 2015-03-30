@@ -5,7 +5,7 @@ import java.util.Calendar;
 import java.util.List;
 import java.sql.Date;
 
-public class Order {
+public class Order implements OrderInterface {
 	private int id;
 	private Date date;
 	private String name;
@@ -14,10 +14,8 @@ public class Order {
 	
 	public Order() {
 		date = new Date(Calendar.getInstance().getTimeInMillis());
-		name = "" + id + "-" + date;
-		pizzas = new ArrayList<Pizza>();
-		//Pizza p = new Pizza();
-		//pizzas.add(p);
+		name = "";
+		pizzas = new ArrayList<Pizza>();		
 		price = new Double(0.0);
 	}
 	
@@ -41,6 +39,10 @@ public class Order {
 		return name;
 	}
 	
+	public void setName(String name) {
+		this.name = name;
+	}
+
 	public List<Pizza> getPizzas() {
 		return pizzas;
 	}

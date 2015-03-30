@@ -11,6 +11,8 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.stereotype.Component;
 
 import ua.epam.rd.repository.Order;
+import ua.epam.rd.repository.OrderAnnotated;
+import ua.epam.rd.repository.OrderInterface;
 import ua.epam.rd.repository.Pizza;
 import ua.epam.rd.repository.PizzaType;
 import ua.epam.rd.service.OrderService;
@@ -20,10 +22,16 @@ import ua.epam.rd.service.PizzaService;
 public class App 
 {
 	private static OrderService orderService;
+	private static PizzaService pizzaService;
 	
 	@Autowired
-    public void setService(OrderService orderService){
+    public void setOrderService(OrderService orderService){
         App.orderService = orderService;
+    }
+	
+	@Autowired
+    public void setPizzaService(PizzaService pizzaService){
+        App.pizzaService = pizzaService;
     }
 	
     public static void main( String[] args )
@@ -42,7 +50,7 @@ public class App
         Pizza p1 = appContext.getBean("pizzaDefaultMeat", Pizza.class);
         Pizza p2 = appContext.getBean("pizzaSea", Pizza.class);
         
-        Order o1 = appContextService.getBean("orderBasic", Order.class);
+        OrderInterface o1 = appContextService.getBean("orderBasic", Order.class);
         o1.addPizza(p1);
                 
         System.out.println(p1);
@@ -55,9 +63,7 @@ public class App
         System.out.println("USING SERVICE WITH AUTOWIRED AND XML-CONFIGURED REPOSITORY - ALL PIZZAS");
         System.out.println("====");
         
-        PizzaService ps = (PizzaService)appContextService.getBean("pizzaService");
-        
-        List<Pizza> allPizzas = ps.getAllPizzas();
+        List<Pizza> allPizzas = pizzaService.getAllPizzas();
         for(Pizza p : allPizzas){
         	System.out.println(p);
         }
@@ -68,7 +74,7 @@ public class App
         System.out.println("USING SERVICE WITH AUTOWIRED AND XML-CONFIGURED REPOSITORY - GET PIZZAS BY TYPE - MEAT");
         System.out.println("====");
         
-        List<Pizza> allMeatPizzas = ps.getPizzasByType(PizzaType.MEAT);
+        List<Pizza> allMeatPizzas = pizzaService.getPizzasByType(PizzaType.MEAT);
         for(Pizza p : allMeatPizzas){
         	System.out.println(p);
         }
@@ -79,7 +85,7 @@ public class App
         System.out.println("USING ANNOTATED SERVICE WITH AUTOWIRED AND ANNOTATED REPOSITORY - ADDING OLD AND NEW ORDER");
         System.out.println("====");
         
-        Order o2 = orderService.createNewOrder();
+        OrderInterface o2 = orderService.createNewOrder();
         o2.addPizza(p1);
         o2.addPizza(p2);
         o2.setDate(new Date((long) (Calendar.getInstance().getTimeInMillis()*0.9)));
@@ -87,8 +93,8 @@ public class App
         orderService.placeOrder(o1);
         orderService.placeOrder(o2);
         
-        List<Order> allOrders = orderService.getAllOrders();
-        for(Order o : allOrders) {
+        List<OrderInterface> allOrders = orderService.getAllOrders();
+        for(OrderInterface o : allOrders) {
         	System.out.println(o);
         }
         System.out.println();
@@ -103,6 +109,24 @@ public class App
         
         
         System.out.println("====");
+        System.out.println("TESTING ORDER ANNOTATION");
+        System.out.println("====");
+        
+        OrderInterface o3 = new OrderAnnotated();
+        o3.addPizza(p2);
+        o3.setDate(new Date((long) (Calendar.getInstance().getTimeInMillis()*1.1)));
+        orderService.placeOrder(o3);
+        
+        allOrders = orderService.getAllOrders();
+        for(OrderInterface o : allOrders) {
+        	System.out.println(o);
+        }
+                
+        System.out.println();
+        
+        
+        System.out.println("====");
+        
         
         ((ConfigurableApplicationContext)appContext).close();
         appContextService.close();

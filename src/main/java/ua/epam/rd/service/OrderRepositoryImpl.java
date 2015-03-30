@@ -5,30 +5,31 @@ import java.util.List;
 
 import org.springframework.stereotype.Repository;
 
-import ua.epam.rd.repository.Order;
+import ua.epam.rd.repository.OrderInterface;
 
 @Repository("orderRepository")
 public class OrderRepositoryImpl implements OrderRepository {
 	
-	private List<Order> orders = new ArrayList<Order>();
+	private List<OrderInterface> orders = new ArrayList<OrderInterface>();
 	
 	@Override
-	public void insert(Order order) {
+	public void insert(OrderInterface order) {
 		int maxId = -1;
-		for (Order o : orders) {
+		for (OrderInterface o : orders) {
 			if (o.getId() > maxId) {
 				maxId = o.getId();
 			}
 		}
 		order.setId(maxId + 1);
+		order.setName("" + order.getId() + "-" + order.getName());
 		orders.add(order);
 	}
 
 	@Override
-	public Order getById(int id) {
-		Order res = null;
+	public OrderInterface getById(int id) {
+		OrderInterface res = null;
 		
-		for (Order o : orders) {
+		for (OrderInterface o : orders) {
 			if (o.getId() == id) {
 				res = o;
 				break;
@@ -39,18 +40,18 @@ public class OrderRepositoryImpl implements OrderRepository {
 	}
 
 	@Override
-	public List<Order> getAll() {
+	public List<OrderInterface> getAll() {
 		return orders;
 	}
 
 	@Override
-	public void update(Order o) {
+	public void update(OrderInterface o) {
 		// TODO Auto-generated method stub
 
 	}
 
 	@Override
-	public void delete(Order o) {
+	public void delete(OrderInterface o) {
 		// TODO Auto-generated method stub
 
 	}
