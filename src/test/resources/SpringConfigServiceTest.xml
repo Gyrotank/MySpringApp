@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:context="http://www.springframework.org/schema/context"
+  xmlns:tx="http://www.springframework.org/schema/tx"
+  xmlns:util="http://www.springframework.org/schema/util"
+  xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.2.xsd
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.2.xsd
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.2.xsd">
+    
+    <!-- Enable annotation-based Spring MVC controllers (eg: @Controller annotation) -->
+    <mvc:annotation-driven/>
+  
+    <context:annotation-config />
+    
+    <context:component-scan base-package="ua.epam.rd">
+    	<context:include-filter type="annotation" expression="ua.epam.rd.repository.OrderAnnotation"/>     
+    </context:component-scan>
+    
+    <bean name="pizzaServiceJDBC" class="ua.epam.rd.service.PizzaServiceImplJDBC"/>
+    
+    <!-- EntityManagerFactory -->
+    <bean class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean" id="entityManagerFactory">
+      <property name="persistenceUnitName" value="persistenceUnit"/>
+      <property name="dataSource" ref="dataSource"/>
+    </bean>
+    
+    <!-- Transaction Manager -->
+  	<bean class="org.springframework.orm.jpa.JpaTransactionManager" id="transactionManager">
+    	<property name="entityManagerFactory" ref="entityManagerFactory"/>
+  	</bean>
+  	
+  	<!-- Enable @Transactional annotation -->
+  	<tx:annotation-driven/>
+        
+</beans>
