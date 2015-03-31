@@ -26,6 +26,12 @@ public class PizzaServiceImplJDBC implements PizzaService {
 	
 	@Transactional
 	@Override
+	public Pizza getPizzaById(int id) {
+		return em.find(Pizza.class, id);		
+	}
+	
+	@Transactional
+	@Override
 	public List<Pizza> getPizzasByType(PizzaType type) {
 		List<Pizza> result = em.createNamedQuery("Pizza.findAllByType", Pizza.class)
 				.setParameter("pizzaType", type)

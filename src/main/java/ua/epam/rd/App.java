@@ -25,7 +25,7 @@ public class App
 {
 	private static OrderService orderService;
 	private static OrderService orderServiceJDBC;
-	private static PizzaService pizzaService;
+	private static PizzaService pizzaService;	
 	
 	@Autowired
     public void setOrderService(OrderService orderService){
@@ -140,6 +140,20 @@ public class App
         
         System.out.println("====");
         System.out.println("TESTING ORDER JDBC ANNOTATION");
+        System.out.println("====");
+        
+        allOrders = orderServiceJDBC.getAllOrders();
+        for(OrderInterface o : allOrders) {
+        	System.out.println(o);
+        }
+        
+        OrderInterface orderToAdd = new Order();
+        //orderToAdd.setDate(new Date((long) (Calendar.getInstance().getTimeInMillis())));
+        orderToAdd.setName("Added Order");
+        orderToAdd.addPizza(pizzaService.getPizzaById(1));
+        orderToAdd.addPizza(pizzaService.getPizzaById(0));
+        orderServiceJDBC.placeOrder(orderToAdd);
+        
         System.out.println("====");
         
         allOrders = orderServiceJDBC.getAllOrders();

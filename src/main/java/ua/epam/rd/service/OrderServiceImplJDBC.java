@@ -9,10 +9,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import ua.epam.rd.repository.OrderInterface;
+import ua.epam.rd.repository.Pizza;
 
 
 @Service("orderServiceJDBC")
-public class OrderServiceImplJDBC implements OrderService {
+public abstract class OrderServiceImplJDBC implements OrderService {
 	
 	@PersistenceContext
 	private EntityManager em;
@@ -27,28 +28,34 @@ public class OrderServiceImplJDBC implements OrderService {
 	@Transactional
 	@Override
 	public OrderInterface getOrderById(int id) {
-		em.find(OrderInterface.class, id);
-		return null;
-	}
-	
-	@Transactional
-	public OrderInterface getOrderByName(String name) {
-		OrderInterface result = em.createNamedQuery("Order.findByName", OrderInterface.class).getSingleResult();
+		OrderInterface result = em.createNamedQuery("Order.findById", OrderInterface.class)
+				.setParameter("orderId", id).getSingleResult();
 		return result;
 	}
 	
 	@Transactional
-	@Override
-	public OrderInterface createNewOrder() {
-		// TODO Auto-generated method stub
-		return null;
+	public OrderInterface getOrderByName(String name) {
+		OrderInterface result = em.createNamedQuery("Order.findByName", OrderInterface.class)
+				.setParameter("orderName", name).getSingleResult();
+		return result;
 	}
+	
+	@Override
+	public abstract OrderInterface createNewOrder();
 	
 	@Transactional
 	@Override
 	public void placeOrder(OrderInterface order) {
-		// TODO Auto-generated method stub
-
+		OrderInterface newOrder = createNewOrder();
+		newOrder.setDate(order.getDate());
+		if (order.getName().isEmpty()) {
+			newOrder.setName(newOrder.getDate().toString());
+		} else {
+			newOrder.setName(order.getName());
+		}
+		for (Pizza p: order.getPizzas()) {
+			newOrder.addPizza(p);
+		}		
+		em.persist(newOrder);
 	}
-
 }

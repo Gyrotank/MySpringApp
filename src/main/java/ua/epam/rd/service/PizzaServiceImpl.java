@@ -18,6 +18,11 @@ public class PizzaServiceImpl implements PizzaService {
 	public List<Pizza> getAllPizzas() {
 		return pizzaRepository.getAll();
 	}
+	
+	@Override
+	public Pizza getPizzaById(int id) {
+		return new Pizza();		
+	}
 
 	@Override
 	public List<Pizza> getPizzasByType(PizzaType type) {

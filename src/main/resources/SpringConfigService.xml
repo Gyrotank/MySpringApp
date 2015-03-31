@@ -48,6 +48,10 @@
     	<lookup-method name="createNewOrder" bean="orderBasic"/>
 	</bean>
 	
+	<bean id="orderServiceJDBC" class="ua.epam.rd.service.OrderServiceImplJDBC">
+    	<lookup-method name="createNewOrder" bean="orderBasic"/>
+	</bean>
+	
 	<bean id="orderAnnotationHandler" class="ua.epam.rd.repository.OrderAnnotationHandler"/>
         
 </beans>

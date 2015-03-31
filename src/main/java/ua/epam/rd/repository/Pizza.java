@@ -1,9 +1,13 @@
 package ua.epam.rd.repository;
 
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
@@ -30,6 +34,9 @@ public class Pizza {
 	
 	@Column(name = "pizzas_type")
 	private PizzaType type;
+	
+	@ManyToMany(mappedBy="pizzas", fetch=FetchType.EAGER)
+	private List<Order> orders;
 	
 	public Pizza(){
 		this.name = "Default Pizza";
@@ -71,8 +78,32 @@ public class Pizza {
 		this.type = type;
 	}
 	
+	public List<Order> getOrders() {
+		return orders;
+	}
+	public void setOrders(List<Order> orders) {
+		this.orders = orders;
+	}
+	public void addOrder(Order o) {
+		orders.add(o);
+		o.addPizza(this);
+	}
+
 	@Override
 	public String toString() {
-		return "{" + this.pizzaId + "; " + this.name + "; " + this.type + "; " + this.price + "}";
+		String res;
+		res = "{" + this.pizzaId + "; " + this.name + "; "
+				+ this.type + "; " + this.price + "; ";
+		res += "[ ";
+		if (orders == null) {
+			res += "NO ORDERS";
+		} else { 
+			for (Order o : orders) {
+				res += o.getName();
+				res += ", ";
+			}
+		}
+		res += "] ";
+		return res;
 	}
 }
