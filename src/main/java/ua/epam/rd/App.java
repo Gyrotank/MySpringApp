@@ -5,6 +5,7 @@ import java.util.Calendar;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -23,6 +24,7 @@ import ua.epam.rd.service.PizzaService;
 public class App 
 {
 	private static OrderService orderService;
+	private static OrderService orderServiceJDBC;
 	private static PizzaService pizzaService;
 	
 	@Autowired
@@ -31,6 +33,12 @@ public class App
     }
 	
 	@Autowired
+    public void setOrderServiceJDBC(OrderService orderServiceJDBC){
+        App.orderServiceJDBC = orderServiceJDBC;
+    }
+	
+	@Autowired
+	@Qualifier("pizzaServiceJDBC")
     public void setPizzaService(PizzaService pizzaService){
         App.pizzaService = pizzaService;
     }
@@ -131,7 +139,13 @@ public class App
         
         
         System.out.println("====");
+        System.out.println("TESTING ORDER JDBC ANNOTATION");
+        System.out.println("====");
         
+        allOrders = orderServiceJDBC.getAllOrders();
+        for(OrderInterface o : allOrders) {
+        	System.out.println(o);
+        }
         
         ((ConfigurableApplicationContext)appContext).close();
         appContextService.close();

@@ -73,6 +73,6 @@ public class Pizza {
 	
 	@Override
 	public String toString() {
-		return "{" + this.name + "; " + this.type + "; " + this.price + "}";
+		return "{" + this.pizzaId + "; " + this.name + "; " + this.type + "; " + this.price + "}";
 	}
 }
