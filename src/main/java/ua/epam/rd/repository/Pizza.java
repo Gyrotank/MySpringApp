@@ -7,9 +7,10 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
+import javax.persistence.JoinColumn;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -35,8 +36,9 @@ public class Pizza {
 	@Column(name = "pizzas_type")
 	private PizzaType type;
 	
-	@ManyToMany(mappedBy="pizzas", fetch=FetchType.EAGER)
-	private List<Order> orders;
+	@OneToMany(fetch = FetchType.EAGER)
+	@JoinColumn(name = "pizza_id")
+	private List<PizzasInOrders> pizzasInOrders;
 	
 	public Pizza(){
 		this.name = "Default Pizza";
@@ -78,16 +80,16 @@ public class Pizza {
 		this.type = type;
 	}
 	
-	public List<Order> getOrders() {
-		return orders;
+	public List<PizzasInOrders> getPizzasInOrders() {
+		return pizzasInOrders;
 	}
-	public void setOrders(List<Order> orders) {
-		this.orders = orders;
+	public void setOrders(List<PizzasInOrders> pizzasInOrders) {
+		this.pizzasInOrders = pizzasInOrders;
 	}
-	public void addOrder(Order o) {
-		orders.add(o);
-		o.addPizza(this);
-	}
+//	public void addOrder(Order o) {
+//		orders.add(o);
+//		o.addPizza(this);
+//	}
 
 	@Override
 	public String toString() {
@@ -95,12 +97,12 @@ public class Pizza {
 		res = "{" + this.pizzaId + "; " + this.name + "; "
 				+ this.type + "; " + this.price + "; ";
 		res += "[ ";
-		if (orders == null) {
+		if (pizzasInOrders == null) {
 			res += "NO ORDERS";
 		} else { 
-			for (Order o : orders) {
-				res += o.getName();
-				res += ", ";
+			for (PizzasInOrders pio : pizzasInOrders) {
+				res += pio.getOrder().getName() + ", " + pio.getPizzaInOrderQuantity();
+				res += "; ";
 			}
 		}
 		res += "] ";

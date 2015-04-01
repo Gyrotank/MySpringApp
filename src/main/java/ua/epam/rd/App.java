@@ -148,7 +148,7 @@ public class App
         }
         
         OrderInterface orderToAdd = new Order();
-        //orderToAdd.setDate(new Date((long) (Calendar.getInstance().getTimeInMillis())));
+        orderToAdd.setDate(new Date((long) (Calendar.getInstance().getTimeInMillis())));
         orderToAdd.setName("Added Order");
         orderToAdd.addPizza(pizzaService.getPizzaById(1));
         orderToAdd.addPizza(pizzaService.getPizzaById(0));
@@ -159,6 +159,13 @@ public class App
         allOrders = orderServiceJDBC.getAllOrders();
         for(OrderInterface o : allOrders) {
         	System.out.println(o);
+        }
+        
+        System.out.println("====");
+        
+        allPizzas = pizzaService.getAllPizzas();
+        for(Pizza p : allPizzas) {
+        	System.out.println(p);
         }
         
         ((ConfigurableApplicationContext)appContext).close();

@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import ua.epam.rd.repository.OrderInterface;
-import ua.epam.rd.repository.Pizza;
+import ua.epam.rd.repository.PizzasInOrders;
 
 
 @Service("orderServiceJDBC")
@@ -53,8 +53,8 @@ public abstract class OrderServiceImplJDBC implements OrderService {
 		} else {
 			newOrder.setName(order.getName());
 		}
-		for (Pizza p: order.getPizzas()) {
-			newOrder.addPizza(p);
+		for (PizzasInOrders pio: order.getPizzasInOrders()) {
+			newOrder.addPizzasInOrders(pio.getPizza(), pio.getPizzaInOrderQuantity());
 		}		
 		em.persist(newOrder);
 	}

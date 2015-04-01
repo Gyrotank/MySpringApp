@@ -79,4 +79,16 @@ public class OrderAnnotated implements OrderInterface {
 		return res;		
 	}
 
+	@Override
+	public List<PizzasInOrders> getPizzasInOrders() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void addPizzasInOrders(Pizza p, int quantity) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }
