@@ -8,8 +8,8 @@ import javax.persistence.PersistenceContext;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import ua.epam.rd.repository.Pizza;
-import ua.epam.rd.repository.PizzaType;
+import ua.epam.rd.domain.Pizza;
+import ua.epam.rd.domain.PizzaType;
 
 @Service("pizzaServiceJDBC")
 public class PizzaServiceImplJDBC implements PizzaService {

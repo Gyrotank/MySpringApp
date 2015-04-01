@@ -11,12 +11,12 @@ import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.stereotype.Component;
 
-import ua.epam.rd.repository.Order;
-import ua.epam.rd.repository.OrderAnnotated;
-import ua.epam.rd.repository.OrderAnnotationHandler;
-import ua.epam.rd.repository.OrderInterface;
-import ua.epam.rd.repository.Pizza;
-import ua.epam.rd.repository.PizzaType;
+import ua.epam.rd.domain.Order;
+import ua.epam.rd.domain.OrderAnnotated;
+import ua.epam.rd.domain.OrderAnnotationHandler;
+import ua.epam.rd.domain.OrderInterface;
+import ua.epam.rd.domain.Pizza;
+import ua.epam.rd.domain.PizzaType;
 import ua.epam.rd.service.OrderService;
 import ua.epam.rd.service.PizzaService;
 

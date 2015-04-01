@@ -5,8 +5,9 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import ua.epam.rd.repository.Pizza;
-import ua.epam.rd.repository.PizzaType;
+import ua.epam.rd.domain.Pizza;
+import ua.epam.rd.domain.PizzaType;
+import ua.epam.rd.repository.PizzaRepository;
 
 @Service("pizzaService")
 public class PizzaServiceImpl implements PizzaService {

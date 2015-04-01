@@ -1,4 +1,4 @@
-package ua.epam.rd.repository;
+package ua.epam.rd.domain;
 
 import java.util.ArrayList;
 import java.util.Calendar;

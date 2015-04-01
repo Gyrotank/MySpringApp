@@ -5,8 +5,9 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import ua.epam.rd.repository.OrderInterface;
-import ua.epam.rd.repository.Pizza;
+import ua.epam.rd.domain.OrderInterface;
+import ua.epam.rd.domain.Pizza;
+import ua.epam.rd.repository.OrderRepository;
 
 @Service("orderService")
 public abstract class OrderServiceImpl implements OrderService {

@@ -8,8 +8,8 @@ import javax.persistence.PersistenceContext;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import ua.epam.rd.repository.OrderInterface;
-import ua.epam.rd.repository.PizzasInOrders;
+import ua.epam.rd.domain.OrderInterface;
+import ua.epam.rd.domain.PizzasInOrders;
 
 
 @Service("orderServiceJDBC")

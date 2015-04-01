@@ -1,4 +1,4 @@
-package ua.epam.rd.repository;
+package ua.epam.rd.domain;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
