@@ -150,8 +150,8 @@ public class App
         OrderInterface orderToAdd = new Order();
         orderToAdd.setDate(new Date((long) (Calendar.getInstance().getTimeInMillis())));
         orderToAdd.setName("Added Order");
+        orderToAdd.addPizza(pizzaService.getPizzaById(2));
         orderToAdd.addPizza(pizzaService.getPizzaById(1));
-        orderToAdd.addPizza(pizzaService.getPizzaById(0));
         orderServiceJDBC.placeOrder(orderToAdd);
         
         System.out.println("====");

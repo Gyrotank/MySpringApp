@@ -12,6 +12,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -40,13 +41,6 @@ public class Order implements OrderInterface {
 	@Column(name = "orders_name")
 	private String name;
 	
-//	@ManyToMany(fetch=FetchType.EAGER)
-//	@JoinTable(
-//			name="pizzasinorders",
-//			joinColumns={@JoinColumn(name="order_id", referencedColumnName="orders_id")},
-//			inverseJoinColumns={@JoinColumn(name="pizza_id", referencedColumnName="pizzas_id")})
-//	private List<Pizza> pizzas;
-	
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@JoinColumn(name = "order_id")
 	private List<PizzasInOrders> pizzasInOrders;
@@ -54,58 +48,56 @@ public class Order implements OrderInterface {
 	@Column(name = "orders_price")
 	private Double price;
 	
+	@ManyToOne(fetch=FetchType.EAGER)
+	@JoinColumn(name="orders_status_id")
+	private OrderStatus orderStatus;
+	
 	public Order() {
 		date = new Date(Calendar.getInstance().getTimeInMillis());
-		name = "";
-		//pizzas = new ArrayList<Pizza>();		
+		name = "";				
 		price = new Double(0.0);
+		orderStatus = new OrderStatus();
 	}
 	
 	public int getId() {
 		return id;
 	}	
-	public void setId(int id) {
+	public void setId(final int id) {
 		this.id = id;
 	}
 	
 	public Date getDate() {
 		return date;
 	}
-	public void setDate(Date date) {
+	public void setDate(final Date date) {
 		this.date = date;
 	}
 	
 	public String getName() {
 		return name;
 	}	
-	public void setName(String name) {
+	public void setName(final String name) {
 		this.name = name;
 	}
 
 	public List<Pizza> getPizzas() {
-//		return pizzas;
 		return new ArrayList<Pizza>();		
 	}
-//	public void setPizzas(List<Pizza> pizzas) {
-//		this.pizzas = pizzas;		
-//	}
-	
-	public void addPizza(Pizza p) {
-//		pizzas.add(p);
-//		price += p.getPrice().doubleValue();
+
+	public void addPizza(final Pizza p) {
 		addPizzasInOrders(p, 1);
 	}
-	public void addPizza(Pizza p, int quantity) {
+	public void addPizza(final Pizza p, final int quantity) {
 		addPizzasInOrders(p, quantity);
 	}
 	
 	public List<PizzasInOrders> getPizzasInOrders() {
 		return pizzasInOrders;
 	}
-	public void setPizzasInOrders(List<PizzasInOrders> pizzasInOrders) {
+	public void setPizzasInOrders(final List<PizzasInOrders> pizzasInOrders) {
 		this.pizzasInOrders = pizzasInOrders;
 	}
-	public void addPizzasInOrders(Pizza p, int quantity) {
+	public void addPizzasInOrders(final Pizza p, final int quantity) {
 		if (pizzasInOrders == null) {
 			pizzasInOrders = new ArrayList<PizzasInOrders>();
 			pizzasInOrders.add(new PizzasInOrders(this, p, quantity));
@@ -140,11 +132,18 @@ public class Order implements OrderInterface {
 		}
 	}
 	
+	public OrderStatus getStatus() {
+		return orderStatus;
+	}
+	public void setStatus(final OrderStatus orderStatus) {
+		this.orderStatus = orderStatus;
+	}
+
 	@Override
 	public String toString() {
 		String res;
 		
-		res = "{" + id + "; " + name + "; " + date + "; " + price + "; ";
+		res = "{" + id + "; " + name + "; " + orderStatus.getName() + "; " + date + "; " + price + "; ";
 		res += "[ ";
 		if (pizzasInOrders == null) {
 			res += "NO PIZZAS";

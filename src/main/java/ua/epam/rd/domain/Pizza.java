@@ -46,7 +46,7 @@ public class Pizza {
 		this.type = PizzaType.MEAT;
 	}
 	
-	public Pizza(String name, Double price, PizzaType type){
+	public Pizza(final String name, final Double price, final PizzaType type){
 		this.name = name;
 		this.price = price;
 		this.type = type;
@@ -55,41 +55,37 @@ public class Pizza {
 	public Integer getPizzaId() {
 		return pizzaId;
 	}
-	public void setPizzaId(Integer pizzaId) {
+	public void setPizzaId(final Integer pizzaId) {
 		this.pizzaId = pizzaId;
 	}
 
 	public String getName() {
 		return name;
 	}
-	public void setName(String name) {
+	public void setName(final String name) {
 		this.name = name;
 	}
 	
 	public Double getPrice() {
 		return price;
 	}
-	public void setPrice(Double price) {
+	public void setPrice(final Double price) {
 		this.price = price;
 	}
 	
 	public PizzaType getType() {
 		return type;
 	}
-	public void setType(PizzaType type) {
+	public void setType(final PizzaType type) {
 		this.type = type;
 	}
 	
 	public List<PizzasInOrders> getPizzasInOrders() {
 		return pizzasInOrders;
 	}
-	public void setOrders(List<PizzasInOrders> pizzasInOrders) {
+	public void setOrders(final List<PizzasInOrders> pizzasInOrders) {
 		this.pizzasInOrders = pizzasInOrders;
 	}
-//	public void addOrder(Order o) {
-//		orders.add(o);
-//		o.addPizza(this);
-//	}
 
 	@Override
 	public String toString() {

@@ -18,6 +18,9 @@ public interface OrderInterface {
 	
 	public Double getPrice();
 	
+	public OrderStatus getStatus();
+	public void setStatus(OrderStatus orderStatus);
+	
 	public List<PizzasInOrders> getPizzasInOrders();
 	public void addPizzasInOrders(Pizza p, int quantity);
 }

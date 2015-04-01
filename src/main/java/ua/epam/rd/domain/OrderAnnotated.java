@@ -91,4 +91,16 @@ public class OrderAnnotated implements OrderInterface {
 		
 	}
 
+	@Override
+	public OrderStatus getStatus() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void setStatus(OrderStatus orderStatus) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }
