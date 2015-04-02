@@ -11,12 +11,14 @@ import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.stereotype.Component;
 
+import ua.epam.rd.domain.Client;
 import ua.epam.rd.domain.Order;
 import ua.epam.rd.domain.OrderAnnotated;
 import ua.epam.rd.domain.OrderAnnotationHandler;
 import ua.epam.rd.domain.OrderInterface;
 import ua.epam.rd.domain.Pizza;
 import ua.epam.rd.domain.PizzaType;
+import ua.epam.rd.service.ClientService;
 import ua.epam.rd.service.OrderService;
 import ua.epam.rd.service.PizzaService;
 
@@ -25,7 +27,8 @@ public class App
 {
 	private static OrderService orderService;
 	private static OrderService orderServiceJDBC;
-	private static PizzaService pizzaService;	
+	private static PizzaService pizzaService;
+	private static ClientService clientService;
 	
 	@Autowired
     public void setOrderService(OrderService orderService){
@@ -41,6 +44,12 @@ public class App
 	@Qualifier("pizzaServiceJDBC")
     public void setPizzaService(PizzaService pizzaService){
         App.pizzaService = pizzaService;
+    }
+	
+	@Autowired
+	@Qualifier("clientServiceJDBC")
+    public void setClientService(ClientService clientService){
+        App.clientService = clientService;
     }
 	
     public static void main( String[] args )
@@ -65,6 +74,7 @@ public class App
         
         OrderInterface o1 = appContextService.getBean("orderBasic", Order.class);
         o1.addPizza(p1);
+        o1.setClient(clientService.getClientById(1));
                 
         System.out.println(p1);
         System.out.println(p2);
@@ -152,6 +162,7 @@ public class App
         orderToAdd.setName("Added Order");
         orderToAdd.addPizza(pizzaService.getPizzaById(2));
         orderToAdd.addPizza(pizzaService.getPizzaById(1));
+        orderToAdd.setClient(clientService.getClientByName("Petro Petrov"));
         orderServiceJDBC.placeOrder(orderToAdd);
         
         System.out.println("====");
@@ -166,6 +177,13 @@ public class App
         allPizzas = pizzaService.getAllPizzas();
         for(Pizza p : allPizzas) {
         	System.out.println(p);
+        }
+        
+        System.out.println("====");
+        
+        List<Client> allClients = clientService.getAllClients();
+        for(Client c : allClients) {
+        	System.out.println(c);
         }
         
         ((ConfigurableApplicationContext)appContext).close();

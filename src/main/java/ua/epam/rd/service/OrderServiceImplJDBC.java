@@ -58,6 +58,7 @@ public abstract class OrderServiceImplJDBC implements OrderService {
 			newOrder.addPizzasInOrders(pio.getPizza(), pio.getPizzaInOrderQuantity());
 		}
 		newOrder.setStatus(em.find(OrderStatus.class, 1));
+		newOrder.setClient(order.getClient());
 		em.persist(newOrder);
 	}
 }

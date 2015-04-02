@@ -52,11 +52,16 @@ public class Order implements OrderInterface {
 	@JoinColumn(name="orders_status_id")
 	private OrderStatus orderStatus;
 	
+	@ManyToOne(fetch=FetchType.EAGER)
+	@JoinColumn(name="client_id")
+	private Client client;
+	
 	public Order() {
 		date = new Date(Calendar.getInstance().getTimeInMillis());
 		name = "";				
 		price = new Double(0.0);
 		orderStatus = new OrderStatus();
+		client = new Client();
 	}
 	
 	public int getId() {
@@ -139,11 +144,18 @@ public class Order implements OrderInterface {
 		this.orderStatus = orderStatus;
 	}
 
+	public Client getClient() {
+		return client;
+	}
+	public void setClient(Client client) {
+		this.client = client;
+	}
+
 	@Override
 	public String toString() {
 		String res;
 		
-		res = "{" + id + "; " + name + "; " + orderStatus.getName() + "; " + date + "; " + price + "; ";
+		res = "{" + id + "; " + name + "; " + client.getName() + "; " + orderStatus.getName() + "; " + date + "; " + price + "; ";
 		res += "[ ";
 		if (pizzasInOrders == null) {
 			res += "NO PIZZAS";

@@ -21,6 +21,9 @@ public interface OrderInterface {
 	public OrderStatus getStatus();
 	public void setStatus(OrderStatus orderStatus);
 	
+	public Client getClient();
+	public void setClient(Client client);
+	
 	public List<PizzasInOrders> getPizzasInOrders();
 	public void addPizzasInOrders(Pizza p, int quantity);
 }
