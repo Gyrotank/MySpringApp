@@ -7,8 +7,8 @@ import ua.epam.rd.domain.Order;
 
 public interface ClientService {
 	
-	List<Client> getAllClients();
-	Client getClientByName(String name);
-	Client getClientById(int id);
-	List<Order> getOrdersForAClientByName(String name);
+	List<Client> readAllClients();
+	Client readClientByName(String name);
+	Client readClientById(int id);
+	List<Order> readOrdersForAClientByName(String name);
 }

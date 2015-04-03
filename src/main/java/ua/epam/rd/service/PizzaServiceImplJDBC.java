@@ -19,21 +19,21 @@ public class PizzaServiceImplJDBC implements PizzaService {
 	
 	@Transactional
 	@Override
-	public List<Pizza> getAllPizzas() {
-		List<Pizza> result = em.createNamedQuery("Pizza.findAll", Pizza.class).getResultList();
+	public List<Pizza> readAllPizzas() {
+		List<Pizza> result = em.createNamedQuery("Pizza.readAll", Pizza.class).getResultList();
 		return result;
 	}
 	
 	@Transactional
 	@Override
-	public Pizza getPizzaById(int id) {
+	public Pizza readPizzaById(int id) {
 		return em.find(Pizza.class, id);		
 	}
 	
 	@Transactional
 	@Override
-	public List<Pizza> getPizzasByType(PizzaType type) {
-		List<Pizza> result = em.createNamedQuery("Pizza.findAllByType", Pizza.class)
+	public List<Pizza> readPizzasByType(PizzaType type) {
+		List<Pizza> result = em.createNamedQuery("Pizza.readAllByType", Pizza.class)
 				.setParameter("pizzaType", type)
 				.getResultList();
 		return result;

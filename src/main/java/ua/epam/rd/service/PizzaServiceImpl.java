@@ -16,17 +16,17 @@ public class PizzaServiceImpl implements PizzaService {
 	private PizzaRepository pizzaRepository;
 	
 	@Override
-	public List<Pizza> getAllPizzas() {
+	public List<Pizza> readAllPizzas() {
 		return pizzaRepository.getAll();
 	}
 	
 	@Override
-	public Pizza getPizzaById(int id) {
+	public Pizza readPizzaById(int id) {
 		return new Pizza();		
 	}
 
 	@Override
-	public List<Pizza> getPizzasByType(PizzaType type) {
+	public List<Pizza> readPizzasByType(PizzaType type) {
 		return pizzaRepository.getByType(type);
 	}
 

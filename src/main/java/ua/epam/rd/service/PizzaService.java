@@ -6,7 +6,7 @@ import ua.epam.rd.domain.*;
 
 public interface PizzaService {
 	
-	List<Pizza> getAllPizzas();
-	List<Pizza> getPizzasByType(PizzaType type);
-	Pizza getPizzaById(int id);
+	List<Pizza> readAllPizzas();
+	List<Pizza> readPizzasByType(PizzaType type);
+	Pizza readPizzaById(int id);
 }

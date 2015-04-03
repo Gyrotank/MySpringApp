@@ -15,8 +15,8 @@ import javax.persistence.Table;
 
 @Entity
 @NamedQueries({
-	@NamedQuery(name="Pizza.findAll", query="SELECT p FROM Pizza p"),
-	@NamedQuery(name="Pizza.findAllByType", query="SELECT p FROM Pizza p "
+	@NamedQuery(name="Pizza.readAll", query="SELECT p FROM Pizza p"),
+	@NamedQuery(name="Pizza.readAllByType", query="SELECT p FROM Pizza p "
 			+ "WHERE p.type = :pizzaType")
 })
 @Table(name = "pizzas")

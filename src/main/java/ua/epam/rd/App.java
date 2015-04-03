@@ -74,7 +74,7 @@ public class App
         
         OrderInterface o1 = appContextService.getBean("orderBasic", Order.class);
         o1.addPizza(p1);
-        o1.setClient(clientService.getClientById(1));
+        o1.setClient(clientService.readClientById(1));
                 
         System.out.println(p1);
         System.out.println(p2);
@@ -86,7 +86,7 @@ public class App
         System.out.println("USING SERVICE WITH AUTOWIRED AND XML-CONFIGURED REPOSITORY - ALL PIZZAS");
         System.out.println("====");
         
-        List<Pizza> allPizzas = pizzaService.getAllPizzas();
+        List<Pizza> allPizzas = pizzaService.readAllPizzas();
         for(Pizza p : allPizzas){
         	System.out.println(p);
         }
@@ -97,7 +97,7 @@ public class App
         System.out.println("USING SERVICE WITH AUTOWIRED AND XML-CONFIGURED REPOSITORY - GET PIZZAS BY TYPE - MEAT");
         System.out.println("====");
         
-        List<Pizza> allMeatPizzas = pizzaService.getPizzasByType(PizzaType.MEAT);
+        List<Pizza> allMeatPizzas = pizzaService.readPizzasByType(PizzaType.MEAT);
         for(Pizza p : allMeatPizzas){
         	System.out.println(p);
         }
@@ -160,9 +160,9 @@ public class App
         OrderInterface orderToAdd = new Order();
         orderToAdd.setDate(new Date((long) (Calendar.getInstance().getTimeInMillis())));
         orderToAdd.setName("Added Order");
-        orderToAdd.addPizza(pizzaService.getPizzaById(2));
-        orderToAdd.addPizza(pizzaService.getPizzaById(1));
-        orderToAdd.setClient(clientService.getClientByName("Petro Petrov"));
+        orderToAdd.addPizza(pizzaService.readPizzaById(2));
+        orderToAdd.addPizza(pizzaService.readPizzaById(1));
+        orderToAdd.setClient(clientService.readClientByName("Petro Petrov"));
         orderServiceJDBC.placeOrder(orderToAdd);
         
         System.out.println("====");
@@ -174,16 +174,23 @@ public class App
         
         System.out.println("====");
         
-        allPizzas = pizzaService.getAllPizzas();
+        allPizzas = pizzaService.readAllPizzas();
         for(Pizza p : allPizzas) {
         	System.out.println(p);
         }
         
         System.out.println("====");
         
-        List<Client> allClients = clientService.getAllClients();
+        List<Client> allClients = clientService.readAllClients();
         for(Client c : allClients) {
         	System.out.println(c);
+        }
+        
+        System.out.println("====");
+        
+        List<Order> allMyOrders = clientService.readOrdersForAClientByName("Ivan Ivanov");
+        for(Order o : allMyOrders) {
+        	System.out.println(o);
         }
         
         ((ConfigurableApplicationContext)appContext).close();
