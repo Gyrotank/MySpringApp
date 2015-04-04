@@ -76,4 +76,30 @@ public class ClientDAOJDBCTest extends DAOTestsTemplate{
     	Assert.assertTrue(clientService.readAllClients().size() == 3);
     	Assert.assertTrue(clientService.readClientById(3).getName().contentEquals("John Doe"));
     }
+    
+    @Test
+    public void testUpdateClientNameById() {
+    	clientService.createClient("John Doe", 
+        		new Address("001", "Acapulco", "Main str.", "45", "2-43"));
+    	Assert.assertTrue(clientService.updateClientNameById(
+        		clientService.readClientByName("John Doe").getId(), "AB") == 1);
+    }
+    
+    @Test
+    public void testDeleteClientByName() {
+    	Assert.assertTrue(clientService.readAllClients().size() == 2);
+    	clientService.deleteClientByName("Ivan Ivanov");
+    	Assert.assertTrue(clientService.readAllClients().size() == 1);    	
+    }
+    
+    @Test
+    public void testReadAllAddresses() {
+    	Assert.assertTrue(clientService.readAllAddresses().size() == 2);
+    }
+    
+    @Test
+    public void testReadAllAddressesAfterClientDelete() {
+    	clientService.deleteClientByName("Ivan Ivanov");
+    	Assert.assertTrue(clientService.readAllAddresses().size() == 1);
+    }
 }

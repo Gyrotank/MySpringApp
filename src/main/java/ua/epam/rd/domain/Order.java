@@ -155,7 +155,13 @@ public class Order implements OrderInterface {
 	public String toString() {
 		String res;
 		
-		res = "{" + id + "; " + name + "; " + client.getName() + "; " + orderStatus.getName() + "; " + date + "; " + price + "; ";
+		res = "{" + id + "; " + name + "; ";
+		if (client == null) {
+			res += "CLIENT DELETED";
+		} else {
+			res += client.getName(); 
+		}
+		res += "; " + orderStatus.getName() + "; " + date + "; " + price + "; ";
 		res += "[ ";
 		if (pizzasInOrders == null) {
 			res += "NO PIZZAS";

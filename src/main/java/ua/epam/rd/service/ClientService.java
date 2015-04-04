@@ -13,4 +13,7 @@ public interface ClientService {
 	Client readClientById(int id);
 	List<Order> readOrdersForAClientByName(String name);
 	void createClient(String name, Address address);
+	int updateClientNameById(int id, String newName);
+	void deleteClientByName(String clientName);
+	List<Address> readAllAddresses();
 }

@@ -24,6 +24,10 @@ import org.hibernate.annotations.LazyCollectionOption;
 	@NamedQuery(name="Client.findByName", query="SELECT c FROM Client c "
 			+ "WHERE c.name = :clientName"),
 	@NamedQuery(name="Client.findOrdersForAClientByName", query="SELECT c.orders FROM Client c "
+			+ "WHERE c.name = :clientName"),
+	@NamedQuery(name="Client.updateClientNameById", query="UPDATE Client c SET name = :newName "
+			+ "WHERE c.id = :id"),
+	@NamedQuery(name="Client.deleteClientByName", query="DELETE FROM Client c "
 			+ "WHERE c.name = :clientName")
 })
 @Table(name = "clients")

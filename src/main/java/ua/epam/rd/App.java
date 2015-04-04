@@ -203,6 +203,37 @@ public class App
         	System.out.println(c.getAddress().getClient());
         }
         
+        System.out.println("====");
+        
+        clientService.updateClientNameById(
+        		clientService.readClientByName("John Doe").getId(), "AB");
+        allClients = clientService.readAllClients();
+        for(Client c : allClients) {
+        	System.out.println(c.getAddress().getClient());
+        }
+        
+        System.out.println("====");
+        
+        clientService.deleteClientByName("Ivan Ivanov");
+        allClients = clientService.readAllClients();
+        for(Client c : allClients) {
+        	System.out.println(c.getAddress().getClient());
+        }
+        
+        System.out.println("====");
+        
+        allOrders = orderServiceJDBC.readAllOrders();
+        for(OrderInterface o : allOrders) {
+        	System.out.println(o);
+        }
+        
+        System.out.println("====");
+        
+        List<Address> allAddresses = clientService.readAllAddresses();
+        for(Address a : allAddresses) {
+        	System.out.println(a);
+        }
+        
         ((ConfigurableApplicationContext)appContext).close();
         appContextService.close();
     }
