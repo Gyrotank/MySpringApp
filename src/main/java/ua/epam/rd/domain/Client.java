@@ -38,15 +38,20 @@ public class Client {
 	private String name;
 	
 	@LazyCollection(LazyCollectionOption.FALSE)
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "client")
+	@OneToMany(cascade = CascadeType.PERSIST, mappedBy = "client")
 	private List<Order> orders;
 	
-	@OneToOne(fetch = FetchType.EAGER)
+	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@JoinColumn(name = "address_id")
 	private Address address;
 	
 	public Client() {
 		name = "Anonymous";
+	}
+	
+	public Client(String name, Address address) {
+		this.name = name;
+		this.address = address;
 	}
 
 	public int getId() {

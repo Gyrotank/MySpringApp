@@ -8,6 +8,7 @@ import javax.persistence.PersistenceContext;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import ua.epam.rd.domain.Address;
 import ua.epam.rd.domain.Client;
 import ua.epam.rd.domain.Order;
 
@@ -32,12 +33,14 @@ public class ClientServiceImplJDBC implements ClientService {
 				.setParameter("clientName", name).getSingleResult();
 		return result;
 	}
-
+	
+	@Transactional
 	@Override
 	public Client readClientById(int id) {
 		return em.find(Client.class, id);
 	}
 
+	@Transactional
 	@Override
 	public List<Order> readOrdersForAClientByName(String name) {
 		@SuppressWarnings("unchecked")
@@ -45,5 +48,14 @@ public class ClientServiceImplJDBC implements ClientService {
 				.setParameter("clientName", name).getResultList();
 		return result;
 	}
+
+	@Transactional
+	@Override
+	public void createClient(String name, Address address) {
+		Client createdClient = new Client(name, address);
+		em.persist(createdClient);
+	}
+	
+	
 
 }

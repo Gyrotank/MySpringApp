@@ -16,12 +16,12 @@ public abstract class OrderServiceImpl implements OrderService {
 	private OrderRepository orderRepository;
 	
 	@Override
-	public List<OrderInterface> getAllOrders() {
+	public List<OrderInterface> readAllOrders() {
 		return orderRepository.getAll();		
 	}
 
 	@Override
-	public OrderInterface getOrderById(int id) {		
+	public OrderInterface readOrderById(int id) {		
 		return orderRepository.getById(id);
 	}
 
@@ -29,7 +29,7 @@ public abstract class OrderServiceImpl implements OrderService {
 	public abstract OrderInterface createNewOrder();
 
 	@Override
-	public void placeOrder(OrderInterface order) {
+	public void createOrder(OrderInterface order) {
 		OrderInterface newOrder = createNewOrder();
 		newOrder.setDate(order.getDate());
 		if (order.getName().isEmpty()) {

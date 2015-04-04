@@ -21,21 +21,21 @@ public abstract class OrderServiceImplJDBC implements OrderService {
 	
 	@Transactional
 	@Override
-	public List<OrderInterface> getAllOrders() {
+	public List<OrderInterface> readAllOrders() {
 		List<OrderInterface> result = em.createNamedQuery("Order.findAll", OrderInterface.class).getResultList();
 		return result;
 	}
 	
 	@Transactional
 	@Override
-	public OrderInterface getOrderById(int id) {
+	public OrderInterface readOrderById(int id) {
 		OrderInterface result = em.createNamedQuery("Order.findById", OrderInterface.class)
 				.setParameter("orderId", id).getSingleResult();
 		return result;
 	}
 	
 	@Transactional
-	public OrderInterface getOrderByName(String name) {
+	public OrderInterface readOrderByName(String name) {
 		OrderInterface result = em.createNamedQuery("Order.findByName", OrderInterface.class)
 				.setParameter("orderName", name).getSingleResult();
 		return result;
@@ -46,7 +46,7 @@ public abstract class OrderServiceImplJDBC implements OrderService {
 	
 	@Transactional
 	@Override
-	public void placeOrder(OrderInterface order) {
+	public void createOrder(OrderInterface order) {
 		OrderInterface newOrder = createNewOrder();
 		newOrder.setDate(order.getDate());
 		if (order.getName().isEmpty()) {

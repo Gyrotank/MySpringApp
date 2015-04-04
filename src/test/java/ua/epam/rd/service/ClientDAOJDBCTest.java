@@ -14,6 +14,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
 import ua.epam.rd.DAOTestsTemplate;
+import ua.epam.rd.domain.Address;
 
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -65,5 +66,14 @@ public class ClientDAOJDBCTest extends DAOTestsTemplate{
     @Test
     public void testReadOrdersForAClientByNameNonExisting() {
     	 Assert.assertTrue(clientService.readOrdersForAClientByName("Sydor Sydorov").isEmpty());
+    }
+    
+    @Test
+    public void testCreateClient() {
+    	Assert.assertTrue(clientService.readAllClients().size() == 2);
+    	clientService.createClient("John Doe", 
+        		new Address("001", "Acapulco", "Main str.", "45", "2-43"));
+    	Assert.assertTrue(clientService.readAllClients().size() == 3);
+    	Assert.assertTrue(clientService.readClientById(3).getName().contentEquals("John Doe"));
     }
 }

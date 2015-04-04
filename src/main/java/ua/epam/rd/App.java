@@ -11,6 +11,7 @@ import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.stereotype.Component;
 
+import ua.epam.rd.domain.Address;
 import ua.epam.rd.domain.Client;
 import ua.epam.rd.domain.Order;
 import ua.epam.rd.domain.OrderAnnotated;
@@ -113,10 +114,10 @@ public class App
         o2.addPizza(p2);
         o2.setDate(new Date((long) (Calendar.getInstance().getTimeInMillis()*0.9)));
         
-        orderService.placeOrder(o1);
-        orderService.placeOrder(o2);
+        orderService.createOrder(o1);
+        orderService.createOrder(o2);
         
-        List<OrderInterface> allOrders = orderService.getAllOrders();
+        List<OrderInterface> allOrders = orderService.readAllOrders();
         for(OrderInterface o : allOrders) {
         	System.out.println(o);
         }
@@ -127,7 +128,7 @@ public class App
         System.out.println("TESTING ORDER REPOSITORY'S getOrderById() METHOD");
         System.out.println("====");
         
-        System.out.println(orderService.getOrderById(0));
+        System.out.println(orderService.readOrderById(0));
         System.out.println();
         
         
@@ -138,9 +139,9 @@ public class App
         OrderInterface o3 = new OrderAnnotated();
         o3.addPizza(p2);
         o3.setDate(new Date((long) (Calendar.getInstance().getTimeInMillis()*1.1)));
-        orderService.placeOrder(o3);
+        orderService.createOrder(o3);
         
-        allOrders = orderService.getAllOrders();
+        allOrders = orderService.readAllOrders();
         for(OrderInterface o : allOrders) {
         	System.out.println(o);
         }
@@ -152,7 +153,7 @@ public class App
         System.out.println("TESTING ORDER JDBC ANNOTATION");
         System.out.println("====");
         
-        allOrders = orderServiceJDBC.getAllOrders();
+        allOrders = orderServiceJDBC.readAllOrders();
         for(OrderInterface o : allOrders) {
         	System.out.println(o);
         }
@@ -163,11 +164,11 @@ public class App
         orderToAdd.addPizza(pizzaService.readPizzaById(2));
         orderToAdd.addPizza(pizzaService.readPizzaById(1));
         orderToAdd.setClient(clientService.readClientByName("Petro Petrov"));
-        orderServiceJDBC.placeOrder(orderToAdd);
+        orderServiceJDBC.createOrder(orderToAdd);
         
         System.out.println("====");
         
-        allOrders = orderServiceJDBC.getAllOrders();
+        allOrders = orderServiceJDBC.readAllOrders();
         for(OrderInterface o : allOrders) {
         	System.out.println(o);
         }
@@ -191,6 +192,15 @@ public class App
         List<Order> allMyOrders = clientService.readOrdersForAClientByName("Ivan Ivanov");
         for(Order o : allMyOrders) {
         	System.out.println(o);
+        }
+        
+        System.out.println("====");
+        
+        clientService.createClient("John Doe", 
+        		new Address("001", "Acapulco", "Main str.", "45", "2-43"));
+        allClients = clientService.readAllClients();
+        for(Client c : allClients) {
+        	System.out.println(c.getAddress().getClient());
         }
         
         ((ConfigurableApplicationContext)appContext).close();

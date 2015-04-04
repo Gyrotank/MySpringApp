@@ -12,6 +12,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
 import ua.epam.rd.DAOTestsTemplate;
+import ua.epam.rd.domain.PizzaType;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = "classpath:SpringConfigTest.xml")
@@ -27,4 +28,31 @@ public class PizzaDAOJDBCTest extends DAOTestsTemplate{
 	public void testReadAllPizzas() {
 		Assert.assertTrue(pizzaService.readAllPizzas().size() == 2);
 	}
+	
+	@Test
+    public void testReadPizzaByIdExisting() {
+    	Assert.assertTrue(pizzaService.readPizzaById(1).getName()
+    			.contentEquals("Big Meat Pizza"));
+    	Assert.assertTrue(pizzaService.readPizzaById(2).getName()
+    			.contentEquals("Big Sea Pizza"));    	
+    }
+    
+    @Test
+    public void testReadPizzaByIdNonExisting() {
+    	 Assert.assertTrue(pizzaService.readPizzaById(3) == null);
+    }
+    
+    @Test
+    public void testReadPizzaByTypeExisting() {
+    	Assert.assertTrue(pizzaService.readPizzasByType(PizzaType.MEAT).get(0)
+    			.getName().contentEquals("Big Meat Pizza"));
+    	Assert.assertTrue(pizzaService.readPizzasByType(PizzaType.SEA).get(0)
+    			.getName().contentEquals("Big Sea Pizza"));
+    	
+    }
+    
+    @Test
+    public void testReadPizzaByTypeNonExisting() {
+    	Assert.assertTrue(pizzaService.readPizzasByType(PizzaType.VEGETARIAN).isEmpty());
+    }
 }

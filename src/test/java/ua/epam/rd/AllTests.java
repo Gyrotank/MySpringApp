@@ -5,12 +5,14 @@ import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
 
 import ua.epam.rd.service.ClientDAOJDBCTest;
+import ua.epam.rd.service.OrderDAOJDBCTest;
 import ua.epam.rd.service.PizzaDAOJDBCTest;
 
 @RunWith(Suite.class)
 @SuiteClasses({
 				ClientDAOJDBCTest.class,
-				PizzaDAOJDBCTest.class
+				PizzaDAOJDBCTest.class,
+				OrderDAOJDBCTest.class
 			})
 
 public class AllTests {

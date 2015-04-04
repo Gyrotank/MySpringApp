@@ -6,8 +6,9 @@ import ua.epam.rd.domain.*;
 
 public interface OrderService {
 	
-	List<OrderInterface> getAllOrders();
-	OrderInterface getOrderById(int id);
+	List<OrderInterface> readAllOrders();
+	OrderInterface readOrderByName(String name);
+	OrderInterface readOrderById(int id);
 	OrderInterface createNewOrder();
-	void placeOrder(OrderInterface order);
+	void createOrder(OrderInterface order);
 }

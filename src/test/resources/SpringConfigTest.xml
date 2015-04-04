@@ -32,8 +32,14 @@
   	<!-- Enable @Transactional annotation -->
   	<tx:annotation-driven/>
   	
+  	<bean name="orderBasic" class="ua.epam.rd.domain.Order" scope="prototype"/>
+  	
   	<bean id="orderService" class="ua.epam.rd.service.OrderServiceImpl">
     	<lookup-method name="createNewOrder" bean="orderBasic"/>
+	</bean>
+	
+	<bean id="orderServiceJDBC" class="ua.epam.rd.service.OrderServiceImplJDBC">
+		<lookup-method name="createNewOrder" bean="orderBasic"/>
 	</bean>
 	
 	<jdbc:embedded-database id="dataSource" type="HSQL">

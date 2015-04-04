@@ -41,6 +41,18 @@ public class Address {
 	
 	@OneToOne(fetch = FetchType.EAGER, mappedBy="address")
 	private Client client;
+	
+	public Address() {
+		
+	}
+	
+	public Address(String postalCode, String city, String street, String bld, String apt) {
+		this.postalCode = postalCode;
+		this.city = city;
+		this.street = street;
+		this.bld = bld;
+		this.apt = apt;
+	}
 
 	public int getId() {
 		return id;
@@ -84,6 +96,13 @@ public class Address {
 		this.apt = apt;
 	}
 	
+	public Client getClient() {
+		return client;
+	}
+	public void setClient(Client client) {
+		this.client = client;
+	}
+
 	@Override
 	public String toString() {
 		String res;

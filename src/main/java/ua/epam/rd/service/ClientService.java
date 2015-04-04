@@ -2,6 +2,7 @@ package ua.epam.rd.service;
 
 import java.util.List;
 
+import ua.epam.rd.domain.Address;
 import ua.epam.rd.domain.Client;
 import ua.epam.rd.domain.Order;
 
@@ -11,4 +12,5 @@ public interface ClientService {
 	Client readClientByName(String name);
 	Client readClientById(int id);
 	List<Order> readOrdersForAClientByName(String name);
+	void createClient(String name, Address address);
 }
