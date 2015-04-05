@@ -91,4 +91,10 @@ public class OrderDAOJDBCTest extends DAOTestsTemplate {
     	Assert.assertTrue(orderService.readOrderByName(createdOrder.getDate().toString()).getId()
     			== 4);
     }
+    
+    @Test
+    public void testUpdateOrderNameById() {
+    	Assert.assertTrue(orderService.updateOrderNameById(
+        		orderService.readOrderByName("Order1").getId(), "Order1_updated") == 1);
+    }
 }

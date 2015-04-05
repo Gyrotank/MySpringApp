@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -60,5 +61,26 @@ public abstract class OrderServiceImplJDBC implements OrderService {
 		newOrder.setStatus(em.find(OrderStatus.class, 1));
 		newOrder.setClient(order.getClient());
 		em.persist(newOrder);
+	}
+	
+	@Transactional
+	@Override
+	public int updateOrderNameById(int id, String newName) {
+		Query query = em.createNamedQuery("Order.updateOrderNameById")
+				.setParameter("id", id).setParameter("newName", newName);
+		return query.executeUpdate();		
+	}
+	
+	@Transactional
+	@Override
+	public void deleteOrderByName(String orderName) {
+		OrderInterface orderToBeDeleted = 
+				em.createNamedQuery("Order.findByName", OrderInterface.class)
+				.setParameter("orderName", orderName).getSingleResult();
+		for (PizzasInOrders pio : orderToBeDeleted.getPizzasInOrders()) {
+			pio.setOrder(null);
+		}
+		orderToBeDeleted.getPizzasInOrders().clear();
+		em.remove(orderToBeDeleted);
 	}
 }

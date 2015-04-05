@@ -78,9 +78,18 @@ public class PizzasInOrders {
 	
 	@Override
 	public String toString() {		
-		return "{" + pizzasInOrdersId + 
-				"; " + order.getName() + 
-				"; " + pizza.getName() + 
-				"; " + pizzaInOrderQuantity + '}'+"\n";
+		String res = "{" + pizzasInOrdersId + "; ";
+		if (order == null) {
+			res += "ORDER WAS DELETED";
+		} else {
+			res += order.getName();
+		}				
+		if (pizza == null) {
+			res += "; PIZZA NO LONGER AVAILABLE";
+		} else {
+			res += "; " + pizza.getName();
+		}
+		res += "; " + pizzaInOrderQuantity + '}'+"\n";
+		return res;
 	}
 }

@@ -19,12 +19,17 @@ import javax.persistence.OneToMany;
 import javax.persistence.PostLoad;
 import javax.persistence.Table;
 
+
 @Entity
 @NamedQueries({
 	@NamedQuery(name="Order.findById", query="SELECT o FROM Order o "
 			+ "WHERE o.id = :orderId"),
 	@NamedQuery(name="Order.findAll", query="SELECT o FROM Order o"),
 	@NamedQuery(name="Order.findByName", query="SELECT o FROM Order o "
+			+ "WHERE o.name = :orderName"),
+	@NamedQuery(name="Order.updateOrderNameById", query="UPDATE Order o SET name = :newName "
+			+ "WHERE o.id = :id"),
+	@NamedQuery(name="Order.deleteOrderByName", query="DELETE FROM Order o "
 			+ "WHERE o.name = :orderName")
 })
 @Table(name = "orders")
@@ -131,8 +136,11 @@ public class Order implements OrderInterface {
 	@PostLoad
 	private void calculatePrice() {
 		if ((!pizzasInOrders.isEmpty()) && (price == 0.0)) {
-			for (PizzasInOrders pio: pizzasInOrders) {				
-				price += pio.getPizza().getPrice().doubleValue() * pio.getPizzaInOrderQuantity();
+			for (PizzasInOrders pio: pizzasInOrders) {
+				if (pio.getPizza() != null) {
+					price += pio.getPizza().getPrice().doubleValue()
+							* pio.getPizzaInOrderQuantity();
+				}
 			}
 		}
 	}

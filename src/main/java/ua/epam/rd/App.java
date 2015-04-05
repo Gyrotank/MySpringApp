@@ -19,6 +19,7 @@ import ua.epam.rd.domain.OrderAnnotationHandler;
 import ua.epam.rd.domain.OrderInterface;
 import ua.epam.rd.domain.Pizza;
 import ua.epam.rd.domain.PizzaType;
+import ua.epam.rd.domain.PizzasInOrders;
 import ua.epam.rd.service.ClientService;
 import ua.epam.rd.service.OrderService;
 import ua.epam.rd.service.PizzaService;
@@ -222,6 +223,7 @@ public class App
         
         System.out.println("====");
         
+        orderServiceJDBC.updateOrderNameById(1, "Order1_updated");
         allOrders = orderServiceJDBC.readAllOrders();
         for(OrderInterface o : allOrders) {
         	System.out.println(o);
@@ -232,6 +234,29 @@ public class App
         List<Address> allAddresses = clientService.readAllAddresses();
         for(Address a : allAddresses) {
         	System.out.println(a);
+        }
+        
+        System.out.println("====");
+        
+        pizzaService.deletePizzaByName("Big Meat Pizza");
+        List<PizzasInOrders> allPizzasInOrders = pizzaService.readAllPizzasInOrders();
+        for(PizzasInOrders pio : allPizzasInOrders) {
+        	System.out.println(pio);
+        }
+        allOrders = orderServiceJDBC.readAllOrders();
+        for(OrderInterface o : allOrders) {
+        	System.out.println(o);
+        }
+        
+        System.out.println("====");
+        orderServiceJDBC.deleteOrderByName("Order1_updated");
+        allOrders = orderServiceJDBC.readAllOrders();
+        for(OrderInterface o : allOrders) {
+        	System.out.println(o);
+        }
+        allPizzasInOrders = pizzaService.readAllPizzasInOrders();
+        for(PizzasInOrders pio : allPizzasInOrders) {
+        	System.out.println(pio);
         }
         
         ((ConfigurableApplicationContext)appContext).close();

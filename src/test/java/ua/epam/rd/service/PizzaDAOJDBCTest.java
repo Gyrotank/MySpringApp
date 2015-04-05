@@ -24,6 +24,10 @@ public class PizzaDAOJDBCTest extends DAOTestsTemplate{
     @Qualifier("pizzaServiceJDBC")
 	private transient PizzaService pizzaService;
 	
+	@Autowired
+    @Qualifier("orderServiceJDBC")
+	private transient OrderService orderService;
+	
 	@Test
 	public void testReadAllPizzas() {
 		Assert.assertTrue(pizzaService.readAllPizzas().size() == 2);
@@ -54,5 +58,37 @@ public class PizzaDAOJDBCTest extends DAOTestsTemplate{
     @Test
     public void testReadPizzaByTypeNonExisting() {
     	Assert.assertTrue(pizzaService.readPizzasByType(PizzaType.VEGETARIAN).isEmpty());
+    }
+    
+    @Test
+    public void testCreatePizza() {
+    	Assert.assertTrue(pizzaService.readAllPizzas().size() == 2);
+    	pizzaService.createPizza("New Vegetarian Pizza", PizzaType.VEGETARIAN, 600.0);
+    	Assert.assertTrue(pizzaService.readAllPizzas().size() == 3);
+    	Assert.assertTrue(pizzaService.readPizzaById(3).getName()
+    			.contentEquals("New Vegetarian Pizza"));
+    }
+    
+    @Test
+    public void testUpdatePizzaPriceByName() {
+    	Assert.assertTrue(pizzaService.updatePizzaPriceByName("Big Meat Pizza", 1000.0) == 1);
+    }
+    
+    @Test
+    public void testDeletePizzaByName() {
+    	Assert.assertTrue(pizzaService.readAllPizzas().size() == 2);
+    	pizzaService.deletePizzaByName("Big Meat Pizza");
+    	Assert.assertTrue(pizzaService.readAllPizzas().size() == 1);
+    }
+    
+    @Test
+    public void testReadAllPizzasInOrders() {
+    	Assert.assertTrue(pizzaService.readAllPizzasInOrders().size() == 4);
+    }
+    
+    @Test
+    public void testReadAllPizzasInOrdersAfterOrderDelete() {
+    	orderService.deleteOrderByName("Order1");
+    	Assert.assertTrue(pizzaService.readAllPizzasInOrders().size() == 4);
     }
 }

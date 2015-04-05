@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import ua.epam.rd.domain.Address;
 import ua.epam.rd.domain.Client;
 import ua.epam.rd.domain.Order;
+import ua.epam.rd.domain.OrderInterface;
 
 
 @Service("clientServiceJDBC")
@@ -71,7 +72,7 @@ public class ClientServiceImplJDBC implements ClientService {
 	public void deleteClientByName(String clientName) {
 		Client clientToBeDeleted = em.createNamedQuery("Client.findByName", Client.class)
 				.setParameter("clientName", clientName).getSingleResult();
-		for (Order o : clientToBeDeleted.getOrders()) {
+		for (OrderInterface o : clientToBeDeleted.getOrders()) {
 			o.setClient(null);			
 		}
 		clientToBeDeleted.getOrders().clear();

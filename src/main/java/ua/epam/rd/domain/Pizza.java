@@ -17,7 +17,13 @@ import javax.persistence.Table;
 @NamedQueries({
 	@NamedQuery(name="Pizza.readAll", query="SELECT p FROM Pizza p"),
 	@NamedQuery(name="Pizza.readAllByType", query="SELECT p FROM Pizza p "
-			+ "WHERE p.type = :pizzaType")
+			+ "WHERE p.type = :pizzaType"),
+	@NamedQuery(name="Pizza.findByName", query="SELECT p FROM Pizza p "
+					+ "WHERE p.name = :pizzaName"),
+	@NamedQuery(name="Pizza.updatePizzaPriceByName", query="UPDATE Pizza p SET price = :newPrice "
+			+ "WHERE p.name = :pizzaName"),
+	@NamedQuery(name="Pizza.deletePizzaByName", query="DELETE FROM Pizza p "
+			+ "WHERE p.name = :pizzaName")
 })
 @Table(name = "pizzas")
 public class Pizza {
@@ -97,7 +103,12 @@ public class Pizza {
 			res += "NO ORDERS";
 		} else { 
 			for (PizzasInOrders pio : pizzasInOrders) {
-				res += pio.getOrder().getName() + ", " + pio.getPizzaInOrderQuantity();
+				if (pio.getOrder() == null) {
+					res += "ORDER WAS DELETED";
+				} else {
+					res += pio.getOrder().getName();
+				}
+				res += ", " + pio.getPizzaInOrderQuantity();
 				res += "; ";
 			}
 		}

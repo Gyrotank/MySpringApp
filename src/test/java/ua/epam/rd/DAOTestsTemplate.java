@@ -75,5 +75,9 @@ public abstract class DAOTestsTemplate {
         		+ "VALUES (1, 1, 1)");
         jdbcTemplate.execute("INSERT INTO Pizzasinorders (order_id, pizza_id, quantity) "
         		+ "VALUES (1, 2, 2)");
+        jdbcTemplate.execute("INSERT INTO Pizzasinorders (order_id, pizza_id, quantity) "
+        		+ "VALUES (2, 1, 2)");
+        jdbcTemplate.execute("INSERT INTO Pizzasinorders (order_id, pizza_id, quantity) "
+        		+ "VALUES (3, 2, 1)");
     }
 }

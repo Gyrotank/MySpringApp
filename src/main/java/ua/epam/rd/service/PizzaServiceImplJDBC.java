@@ -4,12 +4,14 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import ua.epam.rd.domain.Pizza;
 import ua.epam.rd.domain.PizzaType;
+import ua.epam.rd.domain.PizzasInOrders;
 
 @Service("pizzaServiceJDBC")
 public class PizzaServiceImplJDBC implements PizzaService {
@@ -38,5 +40,40 @@ public class PizzaServiceImplJDBC implements PizzaService {
 				.getResultList();
 		return result;
 	}
-
+	
+	@Transactional
+	@Override
+	public void createPizza(String name, PizzaType type, Double price) {
+		Pizza createdPizza = new Pizza(name, price, type);
+		em.persist(createdPizza);		
+	}
+	
+	@Transactional
+	@Override
+	public int updatePizzaPriceByName(String name, Double newPrice) {
+		Query query = em.createNamedQuery("Pizza.updatePizzaPriceByName")
+				.setParameter("pizzaName", name).setParameter("newPrice", newPrice);
+		return query.executeUpdate();
+	}
+	
+	@Transactional
+	@Override
+	public void deletePizzaByName(String pizzaName) {
+		Pizza pizzaToBeDeleted = em.createNamedQuery("Pizza.findByName",Pizza.class)
+				.setParameter("pizzaName", pizzaName).getSingleResult();
+		for (PizzasInOrders pio : pizzaToBeDeleted.getPizzasInOrders()) {
+			pio.setPizza(null);
+		}
+		pizzaToBeDeleted.getPizzasInOrders().clear();
+		em.remove(pizzaToBeDeleted);
+	}
+	
+	@Transactional
+	@Override
+	public List<PizzasInOrders> readAllPizzasInOrders() {
+		List<PizzasInOrders> result = 
+				em.createNamedQuery("PizzasInOrders.findAll", PizzasInOrders.class)
+				.getResultList();
+		return result;
+	}
 }
