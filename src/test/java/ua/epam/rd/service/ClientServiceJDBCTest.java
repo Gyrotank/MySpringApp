@@ -21,7 +21,7 @@ import ua.epam.rd.domain.Address;
 @ContextConfiguration(locations = "classpath:SpringConfigTest.xml")
 @Transactional
 @DirtiesContext(classMode = ClassMode.AFTER_EACH_TEST_METHOD)
-public class ClientDAOJDBCTest extends DAOTestsTemplate{
+public class ClientServiceJDBCTest extends DAOTestsTemplate{
     
     @Autowired
     @Qualifier("clientServiceJDBC")

@@ -4,15 +4,15 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
 
-import ua.epam.rd.service.ClientDAOJDBCTest;
-import ua.epam.rd.service.OrderDAOJDBCTest;
-import ua.epam.rd.service.PizzaDAOJDBCTest;
+import ua.epam.rd.service.ClientServiceJDBCTest;
+import ua.epam.rd.service.OrderServiceJDBCTest;
+import ua.epam.rd.service.PizzaServiceJDBCTest;
 
 @RunWith(Suite.class)
 @SuiteClasses({
-				ClientDAOJDBCTest.class,
-				PizzaDAOJDBCTest.class,
-				OrderDAOJDBCTest.class
+				ClientServiceJDBCTest.class,
+				PizzaServiceJDBCTest.class,
+				OrderServiceJDBCTest.class
 			})
 
 public class AllTests {

@@ -18,7 +18,7 @@ import ua.epam.rd.domain.PizzaType;
 @ContextConfiguration(locations = "classpath:SpringConfigTest.xml")
 @Transactional
 @DirtiesContext(classMode = ClassMode.AFTER_EACH_TEST_METHOD)
-public class PizzaDAOJDBCTest extends DAOTestsTemplate{
+public class PizzaServiceJDBCTest extends DAOTestsTemplate{
 	
 	@Autowired
     @Qualifier("pizzaServiceJDBC")

@@ -24,7 +24,7 @@ import ua.epam.rd.domain.OrderInterface;
 @ContextConfiguration(locations = "classpath:SpringConfigTest.xml")
 @Transactional
 @DirtiesContext(classMode = ClassMode.AFTER_EACH_TEST_METHOD)
-public class OrderDAOJDBCTest extends DAOTestsTemplate {
+public class OrderServiceJDBCTest extends DAOTestsTemplate {
 	
 	@Autowired
     @Qualifier("orderServiceJDBC")
