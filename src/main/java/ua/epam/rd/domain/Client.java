@@ -91,7 +91,12 @@ public class Client {
 	public String toString() {
 		String res;
 		
-		res = "{" + id + "; " + name + "; " + address.toString() + "; ";
+		res = "{" + id + "; " + name + "; ";
+		if (address == null) {
+			res += "ADDRESS NOT AVAILABLE; ";
+		} else {
+			res += address.toString() + "; ";
+		}
 		res += "[ ";
 		if (orders == null) {
 			res += "NO ORDERS";

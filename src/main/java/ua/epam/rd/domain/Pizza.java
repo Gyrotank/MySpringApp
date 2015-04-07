@@ -100,7 +100,7 @@ public class Pizza {
 				+ this.type + "; " + this.price + "; ";
 		res += "[ ";
 		if (pizzasInOrders == null) {
-			res += "NO ORDERS";
+			res += "NO ORDERS ";
 		} else { 
 			for (PizzasInOrders pio : pizzasInOrders) {
 				if (pio.getOrder() == null) {

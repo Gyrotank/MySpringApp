@@ -1,6 +1,7 @@
 package ua.epam.rd;
 
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
@@ -258,6 +259,19 @@ public class App
         for(PizzasInOrders pio : allPizzasInOrders) {
         	System.out.println(pio);
         }
+        
+        Client c = new Client(); 
+        System.out.println(c);
+        c.setAddress(new Address());
+        List<Order> newOrders = new ArrayList<Order>();
+        newOrders.add(new Order());
+        c.setOrders(newOrders);
+        System.out.println(c);
+        Order o = new Order();
+        System.out.println(o);
+        o.setClient(new Client("CLIENT ONE", new Address()));
+        o.addPizzasInOrders(new Pizza(), 1);
+        System.out.println(o);
         
         ((ConfigurableApplicationContext)appContext).close();
         appContextService.close();

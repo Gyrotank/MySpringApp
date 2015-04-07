@@ -107,7 +107,13 @@ public class Address {
 	public String toString() {
 		String res;
 		
-		res = "{" + id + "; " + client.getName() + "; " + postalCode + "; " + city + "; " + street + "; " 
+		res = "{" + id + "; "; 
+		if (client == null) {
+			res += "CLIENT UNKNOWN";
+		} else {
+			res += client.getName();	
+		}				
+		res += "; " + postalCode + "; " + city + "; " + street + "; " 
 				+ bld + "; " + apt + "}";
 		
 		return res;
