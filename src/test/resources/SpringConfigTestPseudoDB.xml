@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:context="http://www.springframework.org/schema/context"
+  xmlns:tx="http://www.springframework.org/schema/tx"
+  xmlns:util="http://www.springframework.org/schema/util"
+  xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+  xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.2.xsd
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.2.xsd
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.2.xsd
+        http://www.springframework.org/schema/jdbc 
+            http://www.springframework.org/schema/jdbc/spring-jdbc.xsd">
+    
+    <!-- Enable annotation-based Spring MVC controllers (eg: @Controller annotation) -->
+    <mvc:annotation-driven/>
+  
+    <context:annotation-config />
+    
+    <context:component-scan base-package="ua.epam.rd"/>    	     
+        
+    <!-- EntityManagerFactory -->
+    <bean class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean" id="entityManagerFactory">
+      <property name="persistenceUnitName" value="persistenceUnit"/>
+      <property name="dataSource" ref="dataSource"/>
+    </bean>
+    
+    <!-- Transaction Manager -->
+  	<bean class="org.springframework.orm.jpa.JpaTransactionManager" id="transactionManager">
+    	<property name="entityManagerFactory" ref="entityManagerFactory"/>
+  	</bean>
+  	
+  	<!-- Enable @Transactional annotation -->
+  	<tx:annotation-driven/>
+  	
+  	<bean name="orderBasic" class="ua.epam.rd.domain.Order" scope="prototype"/>
+  	
+  	<bean id="orderService" class="ua.epam.rd.service.OrderServiceImpl">
+    	<lookup-method name="createNewOrder" bean="orderBasic"/>
+	</bean>
+	
+	<bean id="orderServiceJDBC" class="ua.epam.rd.service.OrderServiceImplJDBC">
+		<lookup-method name="createNewOrder" bean="orderBasic"/>
+	</bean>
+	
+	<bean class="org.apache.commons.dbcp.BasicDataSource" id="dataSource">
+    	<property name="driverClassName" value="com.mysql.jdbc.Driver"/>
+    	<property name="url" value="jdbc:mysql://localhost/pizzadelivery?user=root&amp;password=kokokoR2"/>
+    	<property name="username" value="root"/>
+    	<property name="password" value="kokokoR2"/>
+  	</bean>
+    
+   
+    <bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+        <constructor-arg type='javax.sql.DataSource' ref="dataSource"/>
+    </bean>
+        
+</beans>

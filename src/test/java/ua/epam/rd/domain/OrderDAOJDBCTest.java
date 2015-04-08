@@ -137,9 +137,12 @@ public class OrderDAOJDBCTest extends DAOTestsTemplate {
 	
 	@Test
 	public void testToStringNoClientNoPizzas() {
-		Order newOrder = new Order();
+		Order newOrder = new Order();		
+		String res = "{0; ; Anonymous; null; "
+				+ new Date(Calendar.getInstance().getTimeInMillis())
+				+ "; 0.0; [ NO PIZZAS ]}";
 		Assert.assertTrue(newOrder.toString()
-				.contentEquals("{0; ; Anonymous; null; 2015-04-07; 0.0; [ NO PIZZAS ]}"));
+				.contentEquals(res));
 	}
 	
 	@Test
@@ -147,8 +150,9 @@ public class OrderDAOJDBCTest extends DAOTestsTemplate {
 		Order newOrder = new Order();
 		newOrder.setClient(new Client("CLIENT ONE", new Address()));
 		newOrder.addPizzasInOrders(new Pizza(), 1);
-		Assert.assertTrue(newOrder.toString()
-				.contentEquals("{0; ; CLIENT ONE; null; 2015-04-07; 0.0; "
-						+ "[ {null; Default Pizza; MEAT; 50.0; [ NO ORDERS ] ; 1; \n ]}"));
+		String res = "{0; ; CLIENT ONE; null; "
+				+ new Date(Calendar.getInstance().getTimeInMillis())
+				+ "; 0.0; [ {null; Default Pizza; MEAT; 50.0; [ NO ORDERS ] ; 1; \n ]}";
+		Assert.assertTrue(newOrder.toString().contentEquals(res));
 	}
 }
