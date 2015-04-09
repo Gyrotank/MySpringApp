@@ -1,24 +1,46 @@
 package ua.epam.rd.service;
 
+import java.time.DayOfWeek;
+import java.time.LocalDate;
 import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import ua.epam.rd.domain.Order;
 import ua.epam.rd.domain.OrderInterface;
-import ua.epam.rd.domain.OrderStatus;
 import ua.epam.rd.domain.PizzasInOrders;
+import ua.epam.rd.repository.OrderRepository;
 
 
 @Service("orderServiceJDBC")
-public abstract class OrderServiceImplJDBC implements OrderService {
+public class OrderServiceImplJDBC implements OrderService {
 	
 	@PersistenceContext
 	private EntityManager em;
+	
+	@Autowired
+	@Qualifier("orderRepositoryJDBC")
+	private OrderRepository orderRepository;
+	
+	OrderServiceImplJDBC() {
+		
+	}
+	
+	OrderServiceImplJDBC(OrderRepository orderRepository) {
+		this.orderRepository = orderRepository;
+	}
+	
+	boolean isWorkingDay() {
+        DayOfWeek dayOfWeek = LocalDate.now().getDayOfWeek();
+        return dayOfWeek != DayOfWeek.SUNDAY;        
+    }
 	
 	@Transactional
 	@Override
@@ -43,24 +65,27 @@ public abstract class OrderServiceImplJDBC implements OrderService {
 	}
 	
 	@Override
-	public abstract OrderInterface createNewOrder();
+	public OrderInterface createNewOrder() {
+		return new Order();
+	}
 	
 	@Transactional
 	@Override
-	public void createOrder(OrderInterface order) {
-		OrderInterface newOrder = createNewOrder();
-		newOrder.setDate(order.getDate());
-		if (order.getName().isEmpty()) {
-			newOrder.setName(newOrder.getDate().toString());
-		} else {
-			newOrder.setName(order.getName());
-		}
-		for (PizzasInOrders pio: order.getPizzasInOrders()) {
-			newOrder.addPizzasInOrders(pio.getPizza(), pio.getPizzaInOrderQuantity());
-		}
-		newOrder.setStatus(em.find(OrderStatus.class, 1));
-		newOrder.setClient(order.getClient());
-		em.persist(newOrder);
+	public void createOrder(OrderInterface order) {		
+		orderRepository.createOrder(order);
+	}
+	
+	@Transactional
+	@Override
+	public void createOrderControlled(OrderInterface order) {
+		if (!order.getStatus().getName().contentEquals("NEW"))
+			throw new IllegalArgumentException();
+		if (order.getPizzasInOrders().isEmpty())
+			throw new IllegalArgumentException();
+		if (!isWorkingDay())
+			throw new IllegalArgumentException();
+		
+		orderRepository.createOrder(order);
 	}
 	
 	@Transactional

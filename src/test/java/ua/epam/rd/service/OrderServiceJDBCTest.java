@@ -1,5 +1,7 @@
 package ua.epam.rd.service;
 
+import static org.mockito.Mockito.*;
+
 import java.sql.Date;
 import java.util.Calendar;
 
@@ -18,6 +20,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import ua.epam.rd.DAOTestsTemplate;
 import ua.epam.rd.domain.OrderInterface;
+import ua.epam.rd.domain.OrderStatus;
+import ua.epam.rd.domain.Pizza;
+import ua.epam.rd.repository.OrderRepository;
 
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -96,5 +101,43 @@ public class OrderServiceJDBCTest extends DAOTestsTemplate {
     public void testUpdateOrderNameById() {
     	Assert.assertTrue(orderService.updateOrderNameById(
         		orderService.readOrderByName("Order1").getId(), "Order1_updated") == 1);
+    }
+    
+    @Test
+    public void testCreateOrderControlledNoProblems() {
+    	OrderRepository mockOrderRepository = mock(OrderRepository.class);
+    	
+    	OrderServiceImplJDBC osi = new OrderServiceImplJDBC(mockOrderRepository);
+    	OrderServiceImplJDBC spyOsi = spy(osi);
+    	doReturn(true).when(spyOsi).isWorkingDay();
+    	
+    	OrderInterface createdOrder = orderService.createNewOrder();
+    	createdOrder.setStatus(new OrderStatus("NEW"));
+    	createdOrder.addPizza(new Pizza());
+    	
+    	when(mockOrderRepository.createOrder(createdOrder)).thenReturn(Boolean.TRUE);
+    	
+    	spyOsi.createOrderControlled(createdOrder);
+    	
+    	verify(mockOrderRepository).createOrder(createdOrder);
+    }
+    
+    @Test(expected = IllegalArgumentException.class)
+    public void testCreateOrderControlledNotWorkingDay() {
+    	OrderRepository mockOrderRepository = mock(OrderRepository.class);
+    	
+    	OrderServiceImplJDBC osi = new OrderServiceImplJDBC(mockOrderRepository);
+    	OrderServiceImplJDBC spyOsi = spy(osi);
+    	doReturn(false).when(spyOsi).isWorkingDay();
+    	
+    	OrderInterface createdOrder = orderService.createNewOrder();
+    	createdOrder.setStatus(new OrderStatus("NEW"));
+    	createdOrder.addPizza(new Pizza());
+    	
+    	when(mockOrderRepository.createOrder(createdOrder)).thenReturn(Boolean.TRUE);
+    	
+    	spyOsi.createOrderControlled(createdOrder);
+    	
+    	verify(mockOrderRepository).createOrder(createdOrder);
     }
 }

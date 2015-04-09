@@ -11,6 +11,7 @@ public interface OrderService {
 	OrderInterface readOrderById(int id);
 	OrderInterface createNewOrder();
 	void createOrder(OrderInterface order);
+	void createOrderControlled(OrderInterface order);
 	int updateOrderNameById(int id, String newName);
-	void deleteOrderByName(String orderName);
+	void deleteOrderByName(String orderName);	
 }

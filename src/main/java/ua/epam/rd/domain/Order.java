@@ -134,7 +134,7 @@ public class Order implements OrderInterface {
 	}
 	
 	@PostLoad
-	protected void calculatePrice() {
+	void calculatePrice() {
 		if ((!pizzasInOrders.isEmpty()) && (price == 0.0)) {
 			for (PizzasInOrders pio: pizzasInOrders) {
 				if (pio.getPizza() != null) {
