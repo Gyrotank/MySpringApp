@@ -14,25 +14,25 @@
     <!-- Enable @Transactional annotation -->
     <tx:annotation-driven/>
   
-    <context:component-scan base-package="ua.epam.rd">
-    	<context:include-filter type="annotation" expression="ua.epam.rd.domain.OrderAnnotation"/>  
+    <context:component-scan base-package="ua.pizzadelivery.rd">
+    	<context:include-filter type="annotation" expression="ua.pizzadelivery.rd.domain.OrderAnnotation"/>  
     </context:component-scan>
         	
-	<bean name="orderBasic" class="ua.epam.rd.domain.Order" scope="prototype"/>
+	<bean name="orderBasic" class="ua.pizzadelivery.rd.domain.Order" scope="prototype"/>
 	
-	<bean name="pizzaRepository" class="ua.epam.rd.repository.PizzaRepositoryImpl">
+	<bean name="pizzaRepository" class="ua.pizzadelivery.rd.repository.PizzaRepositoryImpl">
 		<property name="pizzas"> <list>
-			<bean class="ua.epam.rd.domain.Pizza">
+			<bean class="ua.pizzadelivery.rd.domain.Pizza">
 				<property name="name" value="Big Sea"/>
   				<property name="price" value="100.0"/>
   				<property name="type" value="SEA"/>
 			</bean>
-			<bean class="ua.epam.rd.domain.Pizza">
+			<bean class="ua.pizzadelivery.rd.domain.Pizza">
 				<property name="name" value="Big Meat"/>
   				<property name="price" value="150.0"/>
   				<property name="type" value="MEAT"/>
 			</bean>
-			<bean class="ua.epam.rd.domain.Pizza">
+			<bean class="ua.pizzadelivery.rd.domain.Pizza">
 				<property name="name" value="Small Vegetable"/>
   				<property name="price" value="75.0"/>
   				<property name="type" value="VEGETARIAN"/>
@@ -40,18 +40,18 @@
 		</list> </property>
 	</bean>	 
 
-	<bean name="pizzaService" class="ua.epam.rd.service.PizzaServiceImpl"/>
+	<bean name="pizzaService" class="ua.pizzadelivery.rd.service.PizzaServiceImpl"/>
 	
-	<bean name="orderRepository" class="ua.epam.rd.repository.OrderRepositoryImpl"/>
+	<bean name="orderRepository" class="ua.pizzadelivery.rd.repository.OrderRepositoryImpl"/>
 	
-	<bean id="orderService" class="ua.epam.rd.service.OrderServiceImpl">
+	<bean id="orderService" class="ua.pizzadelivery.rd.service.OrderServiceImpl">
     	<lookup-method name="createNewOrder" bean="orderBasic"/>
 	</bean>
 	
-	<bean id="orderServiceJDBC" class="ua.epam.rd.service.OrderServiceImplJDBC">
+	<bean id="orderServiceJDBC" class="ua.pizzadelivery.rd.service.OrderServiceImplJDBC">
     	<lookup-method name="createNewOrder" bean="orderBasic"/>
 	</bean>
 	
-	<bean id="orderAnnotationHandler" class="ua.epam.rd.domain.OrderAnnotationHandler"/>
+	<bean id="orderAnnotationHandler" class="ua.pizzadelivery.rd.domain.OrderAnnotationHandler"/>
         
 </beans>

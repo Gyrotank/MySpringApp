@@ -16,7 +16,7 @@
   
     <context:annotation-config />
     
-    <context:component-scan base-package="ua.epam.rd"/>    	     
+    <context:component-scan base-package="ua.pizzadelivery.rd"/>    	     
         
     <!-- EntityManagerFactory -->
     <bean class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean" id="entityManagerFactory">
@@ -32,13 +32,13 @@
   	<!-- Enable @Transactional annotation -->
   	<tx:annotation-driven/>
   	
-  	<bean name="orderBasic" class="ua.epam.rd.domain.Order" scope="prototype"/>
+  	<bean name="orderBasic" class="ua.pizzadelivery.rd.domain.Order" scope="prototype"/>
   	
-  	<bean id="orderService" class="ua.epam.rd.service.OrderServiceImpl">
+  	<bean id="orderService" class="ua.pizzadelivery.rd.service.OrderServiceImpl">
     	<lookup-method name="createNewOrder" bean="orderBasic"/>
 	</bean>
 	
-	<bean id="orderServiceJDBC" class="ua.epam.rd.service.OrderServiceImplJDBC">
+	<bean id="orderServiceJDBC" class="ua.pizzadelivery.rd.service.OrderServiceImplJDBC">
 		<lookup-method name="createNewOrder" bean="orderBasic"/>
 	</bean>
 	

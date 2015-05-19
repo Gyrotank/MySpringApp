@@ -35,14 +35,14 @@
   	<constructor-arg type='javax.sql.DataSource' ref="dataSource"/>
   </bean>
   
-  <bean name="pizzaDefaultMeat" class="ua.epam.rd.domain.Pizza"/>
+  <bean name="pizzaDefaultMeat" class="ua.pizzadelivery.rd.domain.Pizza"/>
   
-  <bean name="pizzaSea" class="ua.epam.rd.domain.Pizza">
+  <bean name="pizzaSea" class="ua.pizzadelivery.rd.domain.Pizza">
   	<constructor-arg name="name" value="Big Sea"/>
   	<constructor-arg name="price" value="100.0"/>
   	<constructor-arg name="type" value="SEA"/>
   </bean>
   
-  <bean name="orderBasic" class="ua.epam.rd.domain.Order" scope="singleton"/>
+  <bean name="orderBasic" class="ua.pizzadelivery.rd.domain.Order" scope="singleton"/>
    
 </beans>
